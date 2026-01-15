@@ -48,6 +48,7 @@ AdaBoost
 ADAC
 Adafruit
 adamw
+AdamW
 adaptively
 adb
 addHandler
@@ -130,6 +131,7 @@ AllowAnyCustom
 AllowUSBDebugging
 alos
 alpineImage
+alot
 ALSA
 AlSinan
 Altivec
@@ -164,6 +166,7 @@ androidml
 anf
 animateClick
 Anonymized
+ancilliary
 ansible
 Ansible
 Anson
@@ -171,6 +174,8 @@ antialiasing
 Antonov
 AnyCPU
 anypoint
+AndroidX
+androidx
 AO
 AOM
 AOR
@@ -198,6 +203,7 @@ apk
 APK
 APKs
 APL
+APerf's
 aplay
 AppCompatActivity
 AppHost
@@ -322,6 +328,7 @@ Attester
 Attr
 AttributeError
 Aude
+aug
 audiogen
 aufs
 AUP
@@ -329,6 +336,7 @@ auth
 authenticator
 authtoken
 Authtoken
+AssetManager
 autocannon
 Autocannon
 autocomplete
@@ -451,6 +459,7 @@ BeginSample
 BehaviorParametersComponent
 BehaviourName
 BehaviourParameters
+behaviour
 BehaviourUpdate
 belows
 benchArrayPush
@@ -473,6 +482,7 @@ Beyls
 bfloat
 Bfloat
 BFloat
+BGA
 BGR
 Bhusari
 binaryOperator
@@ -537,6 +547,7 @@ Borycki
 BossBattle
 boto
 Botspot
+BoardRenderer
 BoundaryConditions
 Boundness
 BPC
@@ -795,6 +806,7 @@ ColorAttachment
 combinator
 combobox
 CommandEncoder
+commande
 commandline
 commandlinetools
 CommonJS
@@ -956,6 +968,7 @@ customizable
 cv
 CvCameraViewListener
 CvType
+CVVXMAB
 cwd
 cx
 CXL
@@ -986,6 +999,7 @@ DataFrame
 Datagram
 dataloader
 DataLoader
+dataloaders
 DataPoint
 DataPoints
 DataReaders
@@ -1055,6 +1069,7 @@ demoserver
 denoised
 Denoiser
 Denoises
+DigitNet
 denoising
 denormal
 Denormal
@@ -1062,6 +1077,7 @@ denormalized
 DEP
 deployable
 DeployDevTools
+deployability
 deps
 DESC
 Descamps
@@ -1074,6 +1090,7 @@ DesktopApp
 detections
 detectMultiScale
 DetectNet
+deterministically
 dev
 devblogs
 devcon
@@ -1111,6 +1128,7 @@ DIMMs
 DIMPL
 DingTalk
 dir
+dirs
 DirectX
 Disambiguating
 disass
@@ -1183,6 +1201,8 @@ doumentation
 DoWallsBurst
 DoWallsNeon
 DoWallsPlain
+drawable
+drawables
 doxygen
 dp
 dpaa
@@ -1472,6 +1492,7 @@ FlatBuffers
 flexbox
 FlexLM
 FlexNet
+flto
 flink
 Flink
 FLINK
@@ -1921,6 +1942,7 @@ ie
 IEC
 Ieigen
 ietf
+ifconfig
 iex
 ifdef
 IFFT
@@ -1971,9 +1993,11 @@ ini
 inikep
 init
 initcall
+initDebug
 initialise
 initialised
 InitializeComponent
+ImageFolder
 initializer
 initializerListAssign
 initializerListConstruct
@@ -2028,6 +2052,7 @@ intrinsic's
 intrinsics
 Intrinsics
 intructions
+interprocedural
 ints
 invalidations
 io
@@ -2080,6 +2105,7 @@ ISA
 isActive
 ISAs
 ISB
+IC
 IsEncrypted
 ISensor
 ish
@@ -2500,6 +2526,7 @@ LZMA
 mA
 MacBook
 MACC
+MAB
 MacCatalyst
 maccdc
 MACCs
@@ -2642,6 +2669,7 @@ microservice
 microservices
 microsoft
 MicrosoftTeams
+MIMX
 Microsystems
 middleware
 Midgard
@@ -2664,6 +2692,7 @@ MirrorMaker
 misclassification
 mispredict
 mispredicted
+misrecognized
 misprediction
 mispredictions
 mispredicts
@@ -2695,6 +2724,8 @@ MLP
 mlperf
 MLPerf
 MLPerf's
+mlan
+moal
 mlplatform
 MlPlayerManager
 MLPlayerManagerComponent
@@ -2703,6 +2734,7 @@ mlr
 mM
 mmap
 mmc
+modprobe
 MMIO
 MML
 MMLA
@@ -2859,6 +2891,7 @@ Narayanan
 nat
 NativeActivity
 natively
+netdev
 nav
 nbc
 nbr
@@ -2886,6 +2919,7 @@ Nerdctl
 nestybox
 NET's
 NetAspire
+netron
 NETCore
 netdesktop
 NetFn
@@ -2959,7 +2993,9 @@ NoSQL
 nostartfiles
 noteboook
 notEqual
+Netron
 np
+NXP's
 NPC
 NPCRayPerceptionSensor
 NPCs
@@ -3056,6 +3092,7 @@ onCameraFrame
 onCameraViewStarted
 onCameraViewStopped
 onClickListeners
+oneshot
 onCreate
 oneapi
 oneAPI
@@ -3067,6 +3104,8 @@ OnLaunched
 onlinedocs
 onnx
 onnxruntime
+onnxscript
+ONNX's
 OnPropertyChanged
 ons
 onwards
@@ -3117,6 +3156,8 @@ openssh
 OpenSSH
 openssl
 OpenSSL
+opset
+opsets
 openSUSE
 OpenTelemetry
 OpenVPN
@@ -3130,6 +3171,8 @@ opi
 oplogSizeMB
 OPLTK
 OPPO
+Opset
+Opsets
 optee
 optim
 optimise
@@ -3160,6 +3203,7 @@ ot
 OTA
 OTG
 OtherServices
+Otsu
 OutDir
 outHead
 outLine
@@ -3354,6 +3398,8 @@ PowerShell
 Powertrain
 ppa
 PPA
+PrepareData
+PrepareModelForAndroid
 ppc
 ppl
 ppo
@@ -3429,7 +3475,9 @@ proxying
 Przemyslaw
 ps
 PSA
+PSK
 psacertified
+psk
 psci
 PSCI
 pseudocode
@@ -3492,6 +3540,7 @@ qemu
 Qemu
 QEMU
 qemuarm
+QDQ
 Qianwen
 Qixiang
 QLoRA
@@ -3511,6 +3560,7 @@ qualcomm
 quant
 quantized
 quantizes
+QuantizeModel
 quantizing
 quasirandom
 queryable
@@ -3610,6 +3660,7 @@ ReleaseByteArrayElements
 relica
 relinked
 relocations
+Relu
 ReLU
 RelWithDebInfo
 RemainingCapacity
@@ -3750,8 +3801,10 @@ runAnimation
 runAnimationButton
 runbook
 Runbook
+Runlevel
 runCalculations
 RunCalculationsCommand
+RunSudokuProcessor
 runfinch
 runnable
 Running Task: Markdown...
@@ -3759,6 +3812,7 @@ RunsOn
 runtime
 runtimes
 Runtimes
+Runtime's
 runTruncation
 runVectorCalculations
 RUs
@@ -3788,6 +3842,7 @@ sao
 SAXPY
 SBC
 SBCs
+SBBM
 sbin
 sbt
 scala
@@ -3823,6 +3878,7 @@ ScriptRunBehaviourUpdate
 scrits
 scrollable
 scrollback
+ScrollView
 scsi
 sct
 SCTLR
@@ -3912,6 +3968,7 @@ shortcode
 shortener
 Shrinkwrap
 Shrinkwrap's
+SessionOptions
 Shuheng
 si
 sig
@@ -3978,6 +4035,9 @@ sns
 SNS
 SNSClient
 SNSFull
+Sillicon
+SmallNet
+smallnet
 SoA
 soafee
 SOAFEE
@@ -4044,6 +4104,9 @@ ssk
 SSK
 SSKs
 ssl
+SSID
+SSIDs
+ssid
 SSM
 SSO
 ssr
@@ -4134,6 +4197,12 @@ subscribeEmailToTopic
 substring
 subword
 sudo
+sudoku
+SudokuEngine
+SudokuProcessor
+SudokuSolver
+sudokusolveronnx
+SudokuSolverOnnx
 sudoers
 summarization
 sunrpc
@@ -4223,6 +4292,7 @@ TCK
 tcl
 Tcl
 TCL
+TCMalloc
 TCMs
 tcp
 TCP
@@ -4773,6 +4843,7 @@ VVC
 vvenc
 VVenC
 VVEW
+VVX
 VwbgFSoy
 Waheed
 WaitForPresent
@@ -4780,6 +4851,7 @@ WAL
 walkthrough
 Walkthrough
 WANs
+WantedBy
 warmup
 warmups
 watchOS
@@ -5001,6 +5073,7 @@ yoctoproject
 YOLO
 yolov
 Yolov
+YOLOv
 yor
 Youku
 youtu
@@ -5072,6 +5145,7 @@ DGX
 DTC
 Disaggregated
 EP
+EPs
 Espressif
 FPARMv
 FRDM
@@ -5214,6 +5288,7 @@ XNNFullyConnected
 XnnpackBackend
 Zhou
 acc
+accuracies
 agentless
 aten
 blockwise
