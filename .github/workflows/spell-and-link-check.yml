@@ -1,6 +1,10 @@
 name: Spell and Link Check
 
 on:
+  # Temporary: trigger on push for testing
+  push:
+    branches:
+      - test-spell-link-workflow
   # run once a day at 6AM UTC
   schedule:
     - cron: '0 6 * * *'
