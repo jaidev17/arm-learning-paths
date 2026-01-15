@@ -42,6 +42,7 @@ acq
 ACR
 ActAgent
 activations
+acyclic
 Acyclic
 ada
 AdaBoost
@@ -1069,6 +1070,7 @@ demoserver
 denoised
 Denoiser
 Denoises
+digitnet
 DigitNet
 denoising
 denormal
@@ -1192,16 +1194,13 @@ DontDestroyOnLoad
 DoSetup
 dotenv
 dotfiles
-enviornment
 dotnet
 DotNet
 dotnettools
 dotprod
 dotProduct
-avilable
 claud
 claude
-creditiationals
 doumentation
 DoWallsBurst
 DoWallsNeon
@@ -1951,7 +1950,6 @@ Ieigen
 ietf
 ifconfig
 iex
-ignor
 ifdef
 IFFT
 ifndef
@@ -2823,7 +2821,6 @@ msec
 msElapsedTime
 espec
 mgmt
-neglible
 msg
 msi
 MSM
@@ -3228,7 +3225,6 @@ OV
 overcommit
 Overcommit
 overfitting
-overriden
 pac
 PACBTI
 paciasp
@@ -3667,11 +3663,7 @@ refractions
 Refractions
 refx
 refy
-registery
-Registery
 refz
-registery
-Registery
 regmap
 REGS
 reimport
@@ -4001,7 +3993,6 @@ siginfo
 SIGINFO
 Sigmoid
 SignedChar
-sercrets
 significand
 signo
 signup
@@ -4020,7 +4011,6 @@ SingleStream
 Situnayake
 sizeof
 skb
-sercrets
 serviceaccount
 skilllevels
 skillset
@@ -4063,9 +4053,6 @@ SNS
 SNSClient
 SNSFull
 Sillicon
-simplisty
-simulatenously
-simultinously
 SmallNet
 smallnet
 SoA
@@ -4117,7 +4104,6 @@ SPSR
 sql
 sqrt
 Sqrt
-squentional
 SquareMatrixMultiplication
 squeezenet
 SqueezeNet
@@ -4971,13 +4957,11 @@ WinPerf
 winui
 WinUI
 WinUIApp
-wite
 Wiredtiger
 WiredTiger
 Wirkus
 wiseeye
 WiseEye
-wizad
 Wix's
 Wix’s
 Wl
@@ -5189,6 +5173,7 @@ EP
 EPs
 Espressif
 FPARMv
+frdm
 FRDM
 FirewallD
 Flink's
@@ -5319,6 +5304,7 @@ ResNet
 SDOT
 SMES
 SentenceTransformer
+silabs
 Silabs
 TPUs
 UDOT
@@ -5409,6 +5395,7 @@ AIoT
 AQ
 BSPs
 BatchMatMul
+bitnami
 Bitnami
 CIX
 Deconvolution
