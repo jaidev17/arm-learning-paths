@@ -117,3 +117,4 @@ jobs:
           echo "- **Spell Check:** $([ -f spellcheck-output.txt ] && echo '✓ Complete' || echo '✗ Failed')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Download full reports from the artifacts section above." >> $GITHUB_STEP_SUMMARY
+# Testing workflow detection
