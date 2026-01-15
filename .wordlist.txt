@@ -1192,11 +1192,16 @@ DontDestroyOnLoad
 DoSetup
 dotenv
 dotfiles
+enviornment
 dotnet
 DotNet
 dotnettools
 dotprod
 dotProduct
+avilable
+claud
+claude
+creditiationals
 doumentation
 DoWallsBurst
 DoWallsNeon
@@ -1900,6 +1905,8 @@ hugetlbfs
 hugetlbpage
 huggingface
 HuggingFace
+hpa
+httproute
 hugo
 HummingBoard
 hV
@@ -1944,6 +1951,7 @@ Ieigen
 ietf
 ifconfig
 iex
+ignor
 ifdef
 IFFT
 ifndef
@@ -2813,6 +2821,9 @@ msdn
 MSE
 msec
 msElapsedTime
+espec
+mgmt
+neglible
 msg
 msi
 MSM
@@ -3202,6 +3213,7 @@ osThreadPrivileged
 ot
 OTA
 OTG
+OTP
 OtherServices
 Otsu
 OutDir
@@ -3210,11 +3222,13 @@ outLine
 outputArray
 outputBuffer
 outputFile
+outputRunning
 ov
 OV
 overcommit
 Overcommit
 overfitting
+overriden
 pac
 PACBTI
 paciasp
@@ -3256,6 +3270,7 @@ paretrace
 Parichay
 pArm
 pArmtest
+picocom
 PassRole
 passthrough
 PassThru
@@ -3318,6 +3333,7 @@ petclinic
 Petclinic
 PETG
 PFR
+PGDATA
 PGI
 pgo
 PGO
@@ -3401,6 +3417,7 @@ PPA
 PrepareData
 PrepareModelForAndroid
 ppc
+pvc
 ppl
 ppo
 PPO
@@ -3650,11 +3667,16 @@ refractions
 Refractions
 refx
 refy
+registery
+Registery
 refz
+registery
+Registery
 regmap
 REGS
 reimport
 Reimport
+reimplemented
 RelaxedPrecision
 ReleaseByteArrayElements
 relica
@@ -3664,6 +3686,7 @@ Relu
 ReLU
 RelWithDebInfo
 RemainingCapacity
+RemainAfterExit
 Remmina
 RemoteImage
 renderbuffer
@@ -3978,6 +4001,7 @@ siginfo
 SIGINFO
 Sigmoid
 SignedChar
+sercrets
 significand
 signo
 signup
@@ -3996,6 +4020,8 @@ SingleStream
 Situnayake
 sizeof
 skb
+sercrets
+serviceaccount
 skilllevels
 skillset
 Skinnider
@@ -4018,6 +4044,7 @@ SmartNICs
 SmartScreen
 SMAX
 smbus
+scarthgap
 sme
 SME
 SMIN
@@ -4036,12 +4063,16 @@ SNS
 SNSClient
 SNSFull
 Sillicon
+simplisty
+simulatenously
+simultinously
 SmallNet
 smallnet
 SoA
 soafee
 SOAFEE
 Sobel
+sourcecode
 Sobel's
 SoC
 socat
@@ -4086,6 +4117,7 @@ SPSR
 sql
 sqrt
 Sqrt
+squentional
 SquareMatrixMultiplication
 squeezenet
 SqueezeNet
@@ -4147,6 +4179,7 @@ STMicroelectronics
 STMU
 storedprocs
 stp
+stepwise
 str
 strcpy
 Streamline's
@@ -4468,6 +4501,7 @@ Tracepoints
 TraceRun
 TraceSuspend
 tradeoff
+tensor's
 tradeoffs
 traefik
 Traefik
@@ -4481,6 +4515,7 @@ transpilation
 transpiles
 trgt
 trialCount
+thumbdrive
 Trie
 TriggeredBy
 trl
@@ -4563,6 +4598,7 @@ ulp
 ULP
 ULPs
 Uma
+ttyLP
 umax
 UMAX
 UMIN
@@ -4573,6 +4609,8 @@ uname
 unary
 Unary
 unaryOperator
+udhcpc
+usb
 uncheck
 uncomment
 Uncomment
@@ -4630,6 +4668,7 @@ UpdateItem
 UpdateJob
 UpdateThingShadow
 upi
+vcp
 uploader
 UploadToS
 upsampling
@@ -4932,11 +4971,13 @@ WinPerf
 winui
 WinUI
 WinUIApp
+wite
 Wiredtiger
 WiredTiger
 Wirkus
 wiseeye
 WiseEye
+wizad
 Wix's
 Wix’s
 Wl
