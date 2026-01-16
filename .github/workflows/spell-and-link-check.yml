@@ -44,7 +44,8 @@ jobs:
           
           if [ -f htmltest.log ]; then
             echo '```' >> $GITHUB_STEP_SUMMARY
-            cat htmltest.log >> $GITHUB_STEP_SUMMARY
+            # Strip ANSI color codes for cleaner output
+            sed 's/\x1b\[[0-9;]*m//g' htmltest.log >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
