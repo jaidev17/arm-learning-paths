@@ -5,13 +5,11 @@
 
 output_config=".spellcheck-non-draft.yml"
 
-# Find all _index.md files that have 'draft: true' and exclude entire directories
+# Find all _index.md files that have 'draft: true' and get their directories
 echo "Finding draft Learning Paths to exclude..."
 draft_paths=$(find content/learning-paths -type f -name "_index.md" -exec grep -l "^draft: true$" {} \; 2>/dev/null | while read file; do
-  # Get the directory of the _index.md file
-  dir=$(dirname "$file")
-  # Output exclusion pattern for all .md files in that directory
-  echo "  - '!${dir}/**/*.md'"
+  # Get the directory of the _index.md file and output it for exclusion
+  dirname "$file"
 done | sort)
 
 # Start building the config file
@@ -44,9 +42,13 @@ matrix:
   - 'content/learning-paths/**/*.md'
 EOF
 
-# Add exclusions for draft Learning Paths if any were found
+# Add exclusions section if draft paths were found
 if [ -n "$draft_paths" ]; then
-  echo "$draft_paths" >> "$output_config"
+  echo "  excludes:" >> "$output_config"
+  echo "$draft_paths" | while read dir; do
+    echo "  - '$dir/**'" >> "$output_config"
+  done
+  
   draft_count=$(echo "$draft_paths" | wc -l | tr -d ' ')
   echo "Excluding $draft_count draft Learning Path(s) from spell check"
 else
