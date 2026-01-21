@@ -67,6 +67,13 @@ jobs:
           echo "Config contents:"
           cat .spellcheck-non-draft.yml
 
+      - name: Upload generated config
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-spellcheck-config
+          path: .spellcheck-non-draft.yml
+          retention-days: 5
+
       - name: Spell check
         id: spellcheck
         continue-on-error: true
