@@ -62,6 +62,10 @@ jobs:
         run: |
           chmod +x tools/generate-spellcheck-config.sh
           tools/generate-spellcheck-config.sh
+          echo "Generated config file:"
+          ls -lh .spellcheck-non-draft.yml
+          echo "Config contents:"
+          cat .spellcheck-non-draft.yml
 
       - name: Spell check
         id: spellcheck

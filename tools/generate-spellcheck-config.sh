@@ -46,7 +46,7 @@ EOF
 if [ -n "$draft_paths" ]; then
   echo "  excludes:" >> "$output_config"
   echo "$draft_paths" | while read dir; do
-    echo "  - '$dir/**'" >> "$output_config"
+    echo "  - '$dir/**/*.md'" >> "$output_config"
   done
   
   draft_count=$(echo "$draft_paths" | wc -l | tr -d ' ')
