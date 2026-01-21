@@ -9,6 +9,7 @@ package-lock.json
 .env
 startup.sh
 data/
+.spellcheck-non-draft.yml
 
 # macOS files
 *.DS_Store

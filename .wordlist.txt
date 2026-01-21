@@ -3499,6 +3499,7 @@ pstools
 psv
 pte
 pth
+pthread
 PTHREAD
 PTQ
 ptr
