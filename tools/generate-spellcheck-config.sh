@@ -3,7 +3,15 @@
 # Generate a spell check configuration that excludes draft articles
 # This creates a temporary .spellcheck-non-draft.yml file with only non-draft sources
 
+set -e  # Exit on error
+
 output_config=".spellcheck-non-draft.yml"
+
+# Ensure we're in the repository root
+if [ ! -d "content/learning-paths" ]; then
+  echo "Error: content/learning-paths directory not found"
+  exit 1
+fi
 
 # Find all _index.md files that have 'draft: true' and get their directories
 echo "Finding draft Learning Paths to exclude..."
@@ -56,3 +64,11 @@ else
 fi
 
 echo "Generated spell check configuration: $output_config"
+
+# Verify the file was created
+if [ ! -f "$output_config" ]; then
+  echo "Error: Failed to create $output_config"
+  exit 1
+fi
+
+echo "Config file size: $(wc -c < "$output_config") bytes"
