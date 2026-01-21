@@ -1,6 +1,11 @@
 name: Spelling and Hyperlinks Check
 
 on:
+  # Trigger on push to test-draft-filter branch only
+  push:
+    branches:
+      - test-draft-filter
+
   # run once a day at 6AM UTC
   schedule:
     - cron: '0 6 * * *'
