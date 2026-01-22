@@ -86,21 +86,24 @@ jobs:
             echo "**Total spelling issues found:** $ISSUE_COUNT" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             
-            # Show first 100 lines if file is large
+            # Group and display by file
+            echo "**Issues by file:**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            
+            # Show first 150 lines if file is large
             LINE_COUNT=$(wc -l < spellcheck-output.txt)
-            if [ "$LINE_COUNT" -gt 100 ]; then
-              echo "**Showing first 100 issues (total: $LINE_COUNT):**" >> $GITHUB_STEP_SUMMARY
+            if [ "$LINE_COUNT" -gt 150 ]; then
+              head -150 spellcheck-output.txt >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
-              head -100 spellcheck-output.txt >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
-              echo "" >> $GITHUB_STEP_SUMMARY
-              echo "See the full report in the spellcheck-output artifact." >> $GITHUB_STEP_SUMMARY
+              echo "... (showing first 150 of $LINE_COUNT lines)" >> $GITHUB_STEP_SUMMARY
             else
-              echo '```' >> $GITHUB_STEP_SUMMARY
               cat spellcheck-output.txt >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
             fi
+            
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "See the full report in the spellcheck-output artifact." >> $GITHUB_STEP_SUMMARY
           else
             echo "No spelling issues found or spell check did not run." >> $GITHUB_STEP_SUMMARY
           fi
