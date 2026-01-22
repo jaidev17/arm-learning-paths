@@ -57,6 +57,9 @@ jobs:
           path: htmltest.log
           retention-days: 5
 
+      - name: Generate spell check configuration
+        run: tools/generate-spellcheck-non-draft.sh
+
       - name: Spell check
         id: spellcheck
         continue-on-error: true
