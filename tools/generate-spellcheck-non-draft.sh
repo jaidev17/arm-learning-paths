@@ -54,8 +54,8 @@ echo "Building sources list (excluding drafts)..."
 # Collect and add install guide files (excluding drafts)
 install_count=0
 while IFS= read -r file; do
-  # Check if this install guide is marked as draft
-  if ! grep -q "^draft: true$" "$file" 2>/dev/null; then
+  # Check if this install guide is marked as draft (allowing trailing whitespace)
+  if ! grep -q "^draft: true[[:space:]]*$" "$file" 2>/dev/null; then
     echo "  - '$file'" >> "$output_config"
     ((install_count++))
   fi
@@ -74,8 +74,8 @@ while IFS= read -r file; do
     fi
   done
   
-  # Also check if this individual file is marked as draft
-  if [ $is_draft -eq 0 ] && grep -q "^draft: true$" "$file" 2>/dev/null; then
+  # Also check if this individual file is marked as draft (allowing trailing whitespace)
+  if [ $is_draft -eq 0 ] && grep -q "^draft: true[[:space:]]*$" "$file" 2>/dev/null; then
     is_draft=1
   fi
   
