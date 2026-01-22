@@ -60,14 +60,20 @@ jobs:
 
       - name: Generate spell check config (exclude drafts)
         run: |
+          set -x  # Print each command
           pwd
-          ls -la content/ | head -20
+          ls -la content/learning-paths | head -5
           chmod +x tools/generate-spellcheck-config.sh
-          bash -x tools/generate-spellcheck-config.sh
-          echo "After script execution:"
-          ls -lh .spellcheck-non-draft.yml 2>&1 || echo "File not found!"
-          echo "Current directory contents:"
-          ls -la | grep spellcheck
+          bash tools/generate-spellcheck-config.sh 2>&1
+          echo "=== Checking for file ==="
+          if [ -f ".spellcheck-non-draft.yml" ]; then
+            ls -lh .spellcheck-non-draft.yml
+            echo "File exists!"
+          else
+            echo "ERROR: File does not exist!"
+            ls -la | grep spellcheck || echo "No spellcheck files found"
+            exit 1
+          fi
 
       - name: Upload generated config
         uses: actions/upload-artifact@v4
