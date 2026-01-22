@@ -11,11 +11,14 @@ echo "Finding draft Learning Paths..."
 draft_file_list=$(find content/learning-paths -type f -name "_index.md" -exec grep -l "^draft: true$" {} \; 2>/dev/null)
 draft_dirs=()
 while IFS= read -r file; do
-  dir=$(dirname "$file")
-  draft_dirs+=("$dir")
+  # Only mark entire directory as draft if it has cascade directive
+  if grep -q "^cascade:" "$file" 2>/dev/null; then
+    dir=$(dirname "$file")
+    draft_dirs+=("$dir")
+  fi
 done <<< "$draft_file_list"
 
-echo "Found ${#draft_dirs[@]} draft Learning Path(s)"
+echo "Found ${#draft_dirs[@]} draft Learning Path(s) with cascade"
 [[ ${#draft_dirs[@]} -gt 0 ]] && printf 'Draft dirs: %s\n' "${draft_dirs[@]}"
 
 # Write base config template
@@ -62,7 +65,7 @@ echo "Found $install_count non-draft install guide file(s)"
 # Collect and add non-draft learning path files
 lp_count=0
 while IFS= read -r file; do
-  # Check if this file is in a draft directory
+  # Check if this file is in a cascade-draft directory
   is_draft=0
   for draft_dir in "${draft_dirs[@]}"; do
     if [[ "$file" == "$draft_dir"* ]]; then
@@ -70,6 +73,11 @@ while IFS= read -r file; do
       break
     fi
   done
+  
+  # Also check if this individual file is marked as draft
+  if [ $is_draft -eq 0 ] && grep -q "^draft: true$" "$file" 2>/dev/null; then
+    is_draft=1
+  fi
   
   if [ $is_draft -eq 0 ]; then
     echo "  - '$file'" >> "$output_config"
