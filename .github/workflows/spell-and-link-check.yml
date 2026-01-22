@@ -60,12 +60,14 @@ jobs:
 
       - name: Generate spell check config (exclude drafts)
         run: |
+          pwd
+          ls -la content/ | head -20
           chmod +x tools/generate-spellcheck-config.sh
-          tools/generate-spellcheck-config.sh
-          echo "Generated config file:"
-          ls -lh .spellcheck-non-draft.yml
-          echo "Config contents:"
-          cat .spellcheck-non-draft.yml
+          bash -x tools/generate-spellcheck-config.sh
+          echo "After script execution:"
+          ls -lh .spellcheck-non-draft.yml 2>&1 || echo "File not found!"
+          echo "Current directory contents:"
+          ls -la | grep spellcheck
 
       - name: Upload generated config
         uses: actions/upload-artifact@v4
