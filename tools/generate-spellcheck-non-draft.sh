@@ -48,13 +48,16 @@ EOF
 
 echo "Building sources list (excluding drafts)..."
 
-# Collect and add install guide files
+# Collect and add install guide files (excluding drafts)
 install_count=0
 while IFS= read -r file; do
-  echo "  - '$file'" >> "$output_config"
-  ((install_count++))
+  # Check if this install guide is marked as draft
+  if ! grep -q "^draft: true$" "$file" 2>/dev/null; then
+    echo "  - '$file'" >> "$output_config"
+    ((install_count++))
+  fi
 done < <(find content/install-guides -name "*.md" -type f | sort)
-echo "Found $install_count install guide file(s)"
+echo "Found $install_count non-draft install guide file(s)"
 
 # Collect and add non-draft learning path files
 lp_count=0
