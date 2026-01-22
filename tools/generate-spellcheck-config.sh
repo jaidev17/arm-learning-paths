@@ -3,22 +3,22 @@
 # Generate a spell check configuration that excludes draft articles
 # This creates a temporary .spellcheck-non-draft.yml file with only non-draft sources
 
-set -e  # Exit on error
-
 output_config=".spellcheck-non-draft.yml"
 
 # Ensure we're in the repository root
 if [ ! -d "content/learning-paths" ]; then
-  echo "Error: content/learning-paths directory not found"
+  echo "Error: content/learning-paths directory not found" >&2
   exit 1
 fi
 
-# Find all _index.md files that have 'draft: true' and get their directories
 echo "Finding draft Learning Paths to exclude..."
-draft_paths=$(find content/learning-paths -type f -name "_index.md" -exec grep -l "^draft: true$" {} \; 2>/dev/null | while read file; do
-  # Get the directory of the _index.md file and output it for exclusion
-  dirname "$file"
-done | sort)
+
+# Find all _index.md files that have 'draft: true' and get their directories
+draft_dirs=()
+while IFS= read -r file; do
+  dir=$(dirname "$file")
+  draft_dirs+=("$dir")
+done < <(find content/learning-paths -type f -name "_index.md" -exec grep -l "^draft: true$" {} \; 2>/dev/null)
 
 # Start building the config file
 cat > "$output_config" << 'EOF'
@@ -51,14 +51,13 @@ matrix:
 EOF
 
 # Add exclusions section if draft paths were found
-if [ -n "$draft_paths" ]; then
+if [ ${#draft_dirs[@]} -gt 0 ]; then
   echo "  excludes:" >> "$output_config"
-  echo "$draft_paths" | while read dir; do
+  for dir in "${draft_dirs[@]}"; do
     echo "  - '$dir/**/*.md'" >> "$output_config"
   done
   
-  draft_count=$(echo "$draft_paths" | wc -l | tr -d ' ')
-  echo "Excluding $draft_count draft Learning Path(s) from spell check"
+  echo "Excluding ${#draft_dirs[@]} draft Learning Path(s) from spell check"
 else
   echo "No draft Learning Paths found, checking all content"
 fi
@@ -67,7 +66,7 @@ echo "Generated spell check configuration: $output_config"
 
 # Verify the file was created
 if [ ! -f "$output_config" ]; then
-  echo "Error: Failed to create $output_config"
+  echo "Error: Failed to create $output_config" >&2
   exit 1
 fi
 
