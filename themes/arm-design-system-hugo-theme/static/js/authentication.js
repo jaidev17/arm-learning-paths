@@ -31,11 +31,12 @@ window.msalConfig = {
     authority: AUTHORITY,
     knownAuthorities: [B2C_DOMAIN],      
     redirectUri: REDIRECT_URI,
-    postLogoutRedirectUri: REDIRECT_URI
+    postLogoutRedirectUri: REDIRECT_URI,
+    navigateToLoginRequestUrl: false  // prevents our MSAL consuming fragments intended for chat-ai's MSAL
   },
   cache: {
-    cacheLocation: "sessionStorage", // Switch to localStorage for better persistence across tabs after testing
-    storeAuthStateInCookie: false
+    cacheLocation: "sessionStorage",
+    storeAuthStateInCookie: true  // required for Safari ITP: stores MSAL state in cookie not sessionStorage
   },
   system: {
     allowRedirectInIframe: false,
@@ -53,6 +54,45 @@ if (!window.msalInstance) {
     window.msalInstance = new msal.PublicClientApplication(window.msalConfig);
 }
 const msalInstance = window.msalInstance;
+
+// Resolves once initAuth() completes (success or failure).
+// Created at module load so arm-top-navigation-ready can always await it,
+// even if the event fires before the page-boot IIFE calls initAuth().
+let _resolveAuthReady;
+const authReadyPromise = new Promise(resolve => { _resolveAuthReady = resolve; });
+
+// Show the chat-ai widget when signed in; remove it when signed out.
+// redirect-url uses window.location.origin so it works on localhost,
+// internal.learn.arm.com, and learn.arm.com without any configuration changes.
+// login-hint passes the user's email so the widget's internal MSAL can
+// complete ssoSilent without prompting the user to log in again.
+async function ensureChatAiLoaded() {
+  const signedIn = isUserSignedIn();
+  const existingWidget = document.querySelector("chat-ai");
+
+  if (!signedIn) {
+    if (existingWidget) existingWidget.remove();
+    return;
+  }
+
+  if (!existingWidget) {
+    const account = msalInstance.getActiveAccount() || msalInstance.getAllAccounts()[0];
+    const widget = document.createElement("chat-ai");
+    widget.setAttribute("app-name", "learning-paths");
+    widget.setAttribute("redirect-url", window.location.origin + "/");
+
+    // Resolve the user's email from claims to use as login-hint.
+    // account.username in B2C may be an OID, not an email, so we pull
+    // it from idTokenClaims using the same helper used elsewhere.
+    const claims = await getIdTokenClaimsForAccount(account);
+    const email = getEmailClaimValue(claims) || account?.username;
+    if (email) {
+      widget.setAttribute("login-hint", email);
+    }
+
+    document.body.appendChild(widget);
+  }
+}
 
 
 // ----------------------------------------------------------------------
@@ -152,10 +192,14 @@ async function initAuth() {
         await updateDigitalDataForCurrentUser();
     
         renderAuthInTopNav();
+        await ensureChatAiLoaded();
       })().catch((e) => {
         console.log("Auth init failed:", e);
         clearDigitalDataUser();
         renderAuthInTopNav();
+        ensureChatAiLoaded();
+      }).finally(() => {
+        _resolveAuthReady(); // signal auth is done regardless of outcome
       });
     
       return authInitPromise;
@@ -293,12 +337,17 @@ document.addEventListener('arm-account-signin', (event) => {
   });
 });
 
-document.addEventListener("arm-top-navigation-ready", function (e) {
-  // Need to reset theme as arm-top-navigation may override it
-  const htmlElement = document.documentElement; 
-  htmlElement.setAttribute("theme", "dark"); 
+document.addEventListener("arm-top-navigation-ready", async function (e) {
+  // Reset theme immediately — arm-top-navigation may override it
+  document.documentElement.setAttribute("theme", "dark");
+
+  // Wait for MSAL to finish before updating auth UI and showing the widget.
+  // authReadyPromise is created at module load, so this await always works
+  // even when this event fires before the page-boot IIFE calls initAuth().
+  await authReadyPromise;
 
   renderAuthInTopNav();
+  await ensureChatAiLoaded();
 });
 
 
