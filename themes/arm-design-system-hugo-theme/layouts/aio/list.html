@@ -5,25 +5,26 @@
 
     <div class="aio-container">
 
-      <h1 class="aio-title">AI Overview Prototype</h1>
+      <h1 class="aio-title">AI Overview</h1>
       <p class="aio-subtitle">
-        Prototype: mocked single-turn AI overview UI (no live model or backend connected)
+        Ask a question about Arm development — answers are grounded in Arm Learning Paths and install guides.
       </p>
 
       <!-- Search -->
       <div class="aio-search-box">
-        <input id="searchInput" class="aio-search-input" disabled placeholder="Select a query below..." />
+        <input id="searchInput" class="aio-search-input" placeholder="Ask anything about Arm development..." />
+        <button class="aio-submit-btn" onclick="runQuery()">Ask</button>
       </div>
 
       <!-- Example prompts -->
       <div id="examples" class="aio-examples">
-        <button class="aio-chip" onclick="runQuery('docker')">
+        <button class="aio-chip" onclick="prefill('How do I install Docker Engine on Linux?')">
           How do I install Docker Engine on Linux?
         </button>
-        <button class="aio-chip" onclick="runQuery('redis')">
+        <button class="aio-chip" onclick="prefill('Deploy Redis on Arm cloud')">
           Deploy Redis on Arm cloud
         </button>
-        <button class="aio-chip" onclick="runQuery('sme')">
+        <button class="aio-chip" onclick="prefill('What are the learning paths showing SME?')">
           What are the learning paths showing SME?
         </button>
       </div>
@@ -76,6 +77,24 @@
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.aio-submit-btn {
+  background: #238636;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.aio-submit-btn:hover {
+  background: #2ea043;
 }
 
 .aio-search-input {
@@ -191,6 +210,12 @@ pre {
 </style>
 
 <script>
+const AIO_BACKEND = "http://localhost:5001";
+
+function prefill(text) {
+  document.getElementById("searchInput").value = text;
+}
+
 function showLoader() {
   document.getElementById("mainContent").innerHTML = `
     <div class="loader-wrap">
@@ -200,203 +225,73 @@ function showLoader() {
   document.getElementById("sources").innerHTML = "";
 }
 
-function runQuery(type) {
+async function runQuery() {
+  const query = document.getElementById("searchInput").value.trim();
+  if (!query) return;
+
   document.getElementById("layout").style.display = "flex";
   document.getElementById("examples").style.display = "none";
-
-  if (type === "docker") {
-    document.getElementById("searchInput").value = "How do I install Docker Engine on Linux?";
-    showLoader();
-    setTimeout(renderDocker, 2000);
-  }
-
-  if (type === "redis") {
-    document.getElementById("searchInput").value = "Deploy Redis on Arm cloud";
-    showLoader();
-    setTimeout(renderRedisOptions, 2000);
-  }
-  if (type === "sme") {
-  document.getElementById("searchInput").value = "What are the learning paths showing SME?";
   showLoader();
-  setTimeout(renderSME, 2000);
-}
-}
 
+  try {
+    const resp = await fetch(`${AIO_BACKEND}/query`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
 
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error || `Server error ${resp.status}`);
+    }
 
-
-function renderSME() {
-  document.getElementById("mainContent").innerHTML = `
-    <p>
-      Yeah — we’ve got a few solid learning paths around Arm SME (Scalable Matrix Extension), depending on what you’re trying to do. Some are more focused on fundamentals, while others go deeper into performance and real workloads.
-    </p>
-
-    <p>
-      If you're just getting started, there’s a path on vectorizing loops using SIMD and SME, which shows how to take advantage of the hardware for parallelism. From there, you can step up into more compute-heavy examples like matrix multiplication using SME2, which is where you really start to see the performance benefits on modern Arm processors.
-    </p>
-
-    <p>
-      There’s also a more advanced path that looks at profiling SME workloads with ExecuTorch, which is useful if you’re working on ML or AI pipelines and want to understand how SME impacts performance at runtime. So overall, we’ve got coverage from basic vectorization → matrix math → real-world profiling workflows.
-    </p>
-  `;
-
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/simd-loops/" target="_blank">
-        SIMD Loops and Vectorization
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/multiplying-matrices-with-sme2/" target="_blank">
-        Matrix Multiplication with SME2
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/sme-executorch-profiling/" target="_blank">
-        SME Profiling with ExecuTorch
-      </a>
-    </div>
-  `;
+    const data = await resp.json();
+    renderAnswer(data.answer, data.sources || []);
+  } catch (e) {
+    document.getElementById("mainContent").innerHTML = `
+      <p style="color:#f85149;"><strong>Error:</strong> ${e.message}</p>
+      <p style="color:#8b949e;">Make sure the backend server is running:<br>
+      <code>cd ~/Documents/Arm/work/AI\ Search && python server.py</code></p>
+    `;
+    document.getElementById("sources").innerHTML = "";
+  }
 }
 
-function renderDocker() {
-  document.getElementById("mainContent").innerHTML = `
-    <p>Installs Docker Engine and verifies with a test container.</p>
+function renderAnswer(answer, sources) {
+  // Convert simple markdown-like formatting to HTML
+  const html = answer
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n\n/g, "</p><p>")
+    .replace(/\n/g, "<br>");
 
-<pre>
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
+  document.getElementById("mainContent").innerHTML =
+    `<p>${html}</p>
+     <button class="aio-reset" onclick="resetUI()">&#8592; Ask another question</button>`;
 
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+  const seen = new Set();
+  const uniqueSources = sources.filter(s => {
+    if (!s.url || seen.has(s.url)) return false;
+    seen.add(s.url);
+    return true;
+  });
 
-sudo docker run hello-world
-</pre>
-  `;
-
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/install-guides/docker/docker-engine/" target="_blank">
-        Docker Engine Install Guide
-      </a>
-    </div>
-  `;
+  document.getElementById("sources").innerHTML = uniqueSources.length
+    ? uniqueSources.map(s => `
+        <div class="aio-source">
+          <a href="${s.url}" target="_blank">${s.title || s.url}</a>
+        </div>`).join("")
+    : "<p style='color:#8b949e;'>No sources returned.</p>";
 }
 
-
-function renderRedisOptions() {
-  document.getElementById("mainContent").innerHTML = `
-    <div class="aio-query">Deploy Redis on Arm cloud</div>
-    <h3>Where do you want to deploy Redis?</h3>
-
-    <div class="aio-options">
-      <button onclick="handleOption('azure')">A) Azure Cobalt 100 VMs</button>
-      <button onclick="handleOption('gcp')">B) Google Cloud C4A</button>
-      <button onclick="handleOption('other')">C) Other</button>
-    </div>
-  `;
-}
-
-function handleOption(type) {
-  showLoader();
-  setTimeout(() => {
-    if (type === "azure") renderAzure();
-    if (type === "gcp") renderGCP();
-    if (type === "other") renderOther();
-  }, 2000);
-}
-
-function renderAzure() {
-  document.getElementById("mainContent").innerHTML = `
-    <p>
-      This learning path walks through deploying Redis on Azure Cobalt 100 Arm64 virtual machines, starting from provisioning the VM all the way through validating that Redis is running correctly. You install Redis using the system package manager, start the service, and verify connectivity using the Redis CLI to ensure the instance is responding as expected.
-    </p>
-
-    <p>
-      From there, it goes beyond basic setup into real usage patterns. You explore Redis Pub/Sub for real-time messaging between services, and Redis Streams for handling event-driven workloads. These examples help demonstrate how Redis is typically used in production systems on Arm-based cloud infrastructure.
-    </p>
-
-    <p>
-      The final part focuses on performance validation using tools like <code>redis-benchmark</code>, giving you a sense of throughput and latency on Cobalt 100. If you’re looking to optimize performance further, check out the Redis tuning guide below. And if your use case is specifically caching, there’s a dedicated learning path for that as well.
-    </p>
-
-<pre>
-sudo apt update
-sudo apt install redis-server -y
-
-redis-cli ping
-
-redis-benchmark -q -n 10000 -c 50
-</pre>
-  `;
-
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis-cobalt/" target="_blank">
-        Redis on Azure Cobalt 100
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_tune/" target="_blank">
-        Redis Performance Tuning on Arm
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_cache/" target="_blank">
-        Using Redis as a Cache
-      </a>
-    </div>
-  `;
-}
-
-
-function renderGCP() {
-  document.getElementById("mainContent").innerHTML = `
-    <p>
-      This learning path shows how to deploy Redis on Google Cloud C4A Arm-based virtual machines (powered by Axion). You start by provisioning a VM, installing Redis, and verifying that the service is running correctly using standard CLI tools.
-    </p>
-
-    <p>
-      Once Redis is up, the focus shifts to working with in-memory datasets and executing queries efficiently. The examples demonstrate how Redis can be used for fast data access patterns, making it ideal for workloads that require low latency and high throughput.
-    </p>
-
-    <p>
-      The guide also includes benchmarking using <code>redis-benchmark</code> to evaluate performance on Arm-based cloud infrastructure. If you want to go deeper on optimization, the tuning guide linked below is a good next step. And for cache-specific use cases, there’s a separate learning path covering Redis as a caching layer.
-    </p>
-
-<pre>
-sudo apt update
-sudo apt install redis-server -y
-
-redis-benchmark -q -n 10000
-</pre>
-  `;
-
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis-data-searching/" target="_blank">
-        Redis Data Searching on Google Cloud C4A
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_tune/" target="_blank">
-        Redis Performance Tuning on Arm
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_cache/" target="_blank">
-        Using Redis as a Cache
-      </a>
-    </div>
-  `;
-}
-
-function renderOther() {
-  document.getElementById("mainContent").innerHTML = `
-    <p>This deployment scenario is not supported in this prototype.</p>
-  `;
-
-  document.getElementById("sources").innerHTML = `<div>No sources available</div>`;
-}
+// Allow pressing Enter in the search box
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("searchInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") runQuery();
+  });
+});
 
 function resetUI() {
   document.getElementById("layout").style.display = "none";
@@ -404,5 +299,6 @@ function resetUI() {
   document.getElementById("searchInput").value = "";
 }
 </script>
+
 
 {{ end }}
