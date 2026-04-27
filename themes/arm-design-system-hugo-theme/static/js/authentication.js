@@ -157,6 +157,8 @@ async function initAuth() {
         clearDigitalDataUser();
         renderAuthInTopNav();
       });
+
+    window.authInitPromise = authInitPromise; // expose for other scripts to await
     
       return authInitPromise;
 }
