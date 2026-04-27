@@ -99,54 +99,6 @@ Website homepage.
     </div>
 </div>
 
-<!-- chat-ai widget is injected into the DOM on demand (after user auth is confirmed)
-     to prevent the widget from triggering an unwanted SSO popup on page load -->
-<div id="chat-ai-container"></div>
-
-<script>
-    (function () {
-        // Injects the <chat-ai> element only after auth is confirmed, so the widget
-        // does not attempt SSO/popup on page load.
-        function initChatAiWidget() {
-            const account = getAccount();
-            if (!account) return;
-
-            const rawEmails = account.idTokenClaims && account.idTokenClaims.emails;
-            const email = (Array.isArray(rawEmails) ? rawEmails[0] : rawEmails)
-                || (account.idTokenClaims && account.idTokenClaims.sub)
-                || account.name;
-
-            const chatAi = document.createElement('chat-ai');
-            chatAi.setAttribute('app-name', 'learning-paths');
-            chatAi.setAttribute('redirect-url', window.location.origin + '/');
-            if (email) {
-                chatAi.setAttribute('login-hint', email);
-            }
-            document.getElementById('chat-ai-container').appendChild(chatAi);
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            if (window.authInitPromise) {
-                // Auth already started (normal mode with cached session)
-                window.authInitPromise.then(initChatAiWidget).catch(initChatAiWidget);
-            } else {
-                // Auth script hasn't run yet (deferred) — poll briefly for the promise
-                var waited = 0;
-                var interval = setInterval(function () {
-                    waited += 50;
-                    if (window.authInitPromise) {
-                        clearInterval(interval);
-                        window.authInitPromise.then(initChatAiWidget).catch(initChatAiWidget);
-                    } else if (waited >= 3000) {
-                        clearInterval(interval);
-                        initChatAiWidget(); // give up waiting, try anyway
-                    }
-                }, 50);
-            }
-        });
-    })();
-</script>
-
 <!-- Space from page bottom -->
 <div class="homepage-dynamic-bottom-spacing"></div>
 
