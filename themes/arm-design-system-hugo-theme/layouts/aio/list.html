@@ -26,6 +26,9 @@
         <button class="aio-chip" onclick="runQuery('sme')">
           What are the learning paths showing SME?
         </button>
+        <button class="aio-chip" onclick="runQuery('ml-graphics')">
+          Help me get started with what I need to deploy ML models for graphics
+        </button>
       </div>
 
       <!-- Layout -->
@@ -34,14 +37,6 @@
         <!-- LEFT -->
         <div class="aio-left">
           <div id="mainContent" class="aio-card"></div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="aio-right">
-          <div class="aio-card">
-            <h3>Sources</h3>
-            <div id="sources"></div>
-          </div>
         </div>
 
       </div>
@@ -116,9 +111,6 @@
   flex: 2;
 }
 
-.aio-right {
-  flex: 1;
-}
 
 .aio-card {
   background: #161b22;
@@ -168,14 +160,6 @@ pre {
   cursor: pointer;
 }
 
-.aio-source a {
-  color: #58a6ff;
-  text-decoration: none;
-}
-
-.aio-source a:hover {
-  text-decoration: underline;
-}
 
 .loader-wrap {
   display: flex;
@@ -197,7 +181,6 @@ function showLoader() {
       <ads-loader label="loading"></ads-loader>
     </div>
   `;
-  document.getElementById("sources").innerHTML = "";
 }
 
 function runQuery(type) {
@@ -220,6 +203,11 @@ function runQuery(type) {
   showLoader();
   setTimeout(renderSME, 2000);
 }
+  if (type === "ml-graphics") {
+  document.getElementById("searchInput").value = "Help me get started with what I need to deploy ML models for graphics";
+  showLoader();
+  setTimeout(renderMLGraphics, 2000);
+}
 }
 
 
@@ -227,59 +215,73 @@ function runQuery(type) {
 
 function renderSME() {
   document.getElementById("mainContent").innerHTML = `
-    <p>
-      Yeah — we’ve got a few solid learning paths around Arm SME (Scalable Matrix Extension), depending on what you’re trying to do. Some are more focused on fundamentals, while others go deeper into performance and real workloads.
-    </p>
+    <p><strong>AI Overview</strong></p>
+    <p>Arm Learning Paths featuring Scalable Matrix Extension (SME/SME2) help developers accelerate AI and matrix computations. The paths below focus on hands-on optimization workflows for Arm processors.</p>
 
-    <p>
-      If you're just getting started, there’s a path on vectorizing loops using SIMD and SME, which shows how to take advantage of the hardware for parallelism. From there, you can step up into more compute-heavy examples like matrix multiplication using SME2, which is where you really start to see the performance benefits on modern Arm processors.
-    </p>
+    <p><strong>Key learning paths for Arm SME/SME2</strong></p>
+    <ul>
+      <li><a href="https://learn.arm.com/learning-paths/cross-platform/simd-loops/" target="_blank">Learn SVE and SME programming with SIMD Loops</a> — accelerate matrix operations and learn SVE2/SME2 fundamentals.</li>
+      <li><a href="https://learn.arm.com/learning-paths/cross-platform/multiplying-matrices-with-sme2/" target="_blank">Multiplying matrices with SME2</a> — apply SME2 matrix instructions for high-performance compute.</li>
+      <li><a href="https://learn.arm.com/learning-paths/cross-platform/sme-executorch-profiling/" target="_blank">Explore ExecuTorch profiling with SME2</a> — analyze performance, find bottlenecks, and optimize inference.</li>
+    </ul>
 
-    <p>
-      There’s also a more advanced path that looks at profiling SME workloads with ExecuTorch, which is useful if you’re working on ML or AI pipelines and want to understand how SME impacts performance at runtime. So overall, we’ve got coverage from basic vectorization → matrix math → real-world profiling workflows.
-    </p>
+    <br />
+    <p>These paths give you a practical arc from SME fundamentals to applied optimization and profiling.</p>
   `;
 
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/simd-loops/" target="_blank">
-        SIMD Loops and Vectorization
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/multiplying-matrices-with-sme2/" target="_blank">
-        Matrix Multiplication with SME2
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/cross-platform/sme-executorch-profiling/" target="_blank">
-        SME Profiling with ExecuTorch
-      </a>
-    </div>
+}
+
+function renderMLGraphics() {
+  document.getElementById("mainContent").innerHTML = `
+    <p><strong>AI Overview</strong></p>
+    <p>To deploy ML models on Arm graphics (Mali GPUs), start with Vulkan ML extensions and neural graphics workflows, then move into profiling and game engine integrations.</p>
+
+    <p><strong>Arm Learning Paths</strong></p>
+    <ul>
+      <li><a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/vulkan-ml-sample/" target="_blank">Enable neural graphics using ML Extensions for Vulkan</a> — execute neural networks directly on the GPU with Vulkan dataflow graphs.</li>
+      <li><a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/nss-unreal/" target="_blank">Enable Neural Super Sampling in Unreal Engine with ML Extensions</a> — real-time upscaling in a game engine pipeline.</li>
+      <li><a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/profiling-ml-on-arm/" target="_blank">Profile the Performance of AI and ML Mobile Applications on Arm</a> — measure execution time and optimize performance.</li>
+      <li><a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/using_unity_machine_learning_agents/" target="_blank">Deploy Unity Machine Learning Agents on Arm Android devices</a> — integrate ML agents in a Unity workflow.</li>
+      <li><a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/ai-camera-pipelines/" target="_blank">Accelerate Denoising, Background Blur and Low-Light Camera Effects with SME2</a> — apply SME2 acceleration to real-time vision effects.</li>
+    </ul>
+
+    <br />
+    <p>These paths give you a practical starting point from GPU execution to profiling and engine-specific deployment.</p>
   `;
+
 }
 
 function renderDocker() {
   document.getElementById("mainContent").innerHTML = `
-    <p>Installs Docker Engine and verifies with a test container.</p>
+    <p><strong>AI Overview</strong></p>
+    <p>Here’s a quick walkthrough to install Docker Engine on Linux.</p>
 
+    <p>Step 1: Install Docker Engine.</p>
 <pre>
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-
-sudo docker run hello-world
+curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
 </pre>
+
+    <br />
+    <p>Step 2: Add your user to the docker group so you can run Docker without sudo.</p>
+<pre>
+sudo usermod -aG docker $USER ; newgrp docker
+</pre>
+
+    <br />
+    <p>Step 3: Verify the installation with a test container.</p>
+<pre>
+docker run hello-world
+</pre>
+    <br />
+    <p>The output should be a welcome message such as:</p>
+<pre>
+Hello from Docker!
+</pre>
+
+    <br />
+    <p>You can refer to the <a href="https://learn.arm.com/install-guides/docker/docker-engine/" target="_blank">Docker Engine Install Guide</a> for more details.</p>
   `;
 
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/install-guides/docker/docker-engine/" target="_blank">
-        Docker Engine Install Guide
-      </a>
-    </div>
-  `;
 }
 
 
@@ -329,23 +331,6 @@ redis-benchmark -q -n 10000 -c 50
 </pre>
   `;
 
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis-cobalt/" target="_blank">
-        Redis on Azure Cobalt 100
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_tune/" target="_blank">
-        Redis Performance Tuning on Arm
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_cache/" target="_blank">
-        Using Redis as a Cache
-      </a>
-    </div>
-  `;
 }
 
 
@@ -371,23 +356,6 @@ redis-benchmark -q -n 10000
 </pre>
   `;
 
-  document.getElementById("sources").innerHTML = `
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis-data-searching/" target="_blank">
-        Redis Data Searching on Google Cloud C4A
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_tune/" target="_blank">
-        Redis Performance Tuning on Arm
-      </a>
-    </div>
-    <div class="aio-source">
-      <a href="https://learn.arm.com/learning-paths/servers-and-cloud-computing/redis_cache/" target="_blank">
-        Using Redis as a Cache
-      </a>
-    </div>
-  `;
 }
 
 function renderOther() {
@@ -395,7 +363,6 @@ function renderOther() {
     <p>This deployment scenario is not supported in this prototype.</p>
   `;
 
-  document.getElementById("sources").innerHTML = `<div>No sources available</div>`;
 }
 
 function resetUI() {
