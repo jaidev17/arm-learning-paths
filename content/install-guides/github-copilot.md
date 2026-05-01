@@ -5,6 +5,10 @@ author: Pareena Verma
 minutes_to_complete: 10
 official_docs: https://docs.github.com/en/copilot
 
+test_maintenance: true
+test_images:
+- ubuntu:latest
+
 layout: installtoolsall
 multi_install: false
 multitool_install_part: false
