@@ -4,7 +4,7 @@
 <script>
     (function () {
         function initChatAiWidget() {
-            const account = getAccount();
+            const account = getAccount(); //from static/js/authentication.js, returns null if not signed in
             if (!account) return;
 
             const rawEmails = account.idTokenClaims && account.idTokenClaims.emails;
