@@ -210,7 +210,7 @@ pre {
 </style>
 
 <script>
-const AIO_BACKEND = {{ .Site.Params.aio_backend_url | default "http://localhost:5001" | jsonify }};
+const AIO_BACKEND = "{{ .Site.Params.aio_backend_url | default "http://localhost:5001" }}";
 
 function buildQueryUrl(base) {
   const normalized = String(base || "").trim().replace(/\/+$/, "");
