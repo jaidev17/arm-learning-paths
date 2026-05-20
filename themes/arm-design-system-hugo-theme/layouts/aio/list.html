@@ -210,7 +210,7 @@ pre {
 </style>
 
 <script>
-const AIO_BACKEND = "http://localhost:5001";
+const AIO_BACKEND = {{ .Site.Params.aio_backend_url | default "http://localhost:5001" | jsonify }};
 
 function prefill(text) {
   document.getElementById("searchInput").value = text;
@@ -251,7 +251,7 @@ async function runQuery() {
     document.getElementById("mainContent").innerHTML = `
       <p style="color:#f85149;"><strong>Error:</strong> ${e.message}</p>
       <p style="color:#8b949e;">Make sure the backend server is running:<br>
-      <code>cd ~/Documents/Arm/work/AI\ Search && python server.py</code></p>
+      <code>cd tools/aio-backend && python3 server.py</code></p>
     `;
     document.getElementById("sources").innerHTML = "";
   }

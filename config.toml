@@ -92,6 +92,9 @@ twitter_handle = '@ArmSoftwareDev'
 
 math = true
 
+# Backend endpoint used by /aio page in local development.
+aio_backend_url = "http://localhost:5001"
+
 
 # Enabling building of COVEO-specific sitemap in addition to the normal one.
 [outputFormats]
