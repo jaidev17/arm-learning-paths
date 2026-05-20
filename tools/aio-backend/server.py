@@ -32,7 +32,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
-        if self.path != "/query":
+        if self.path not in {"/query", "/query/", "/"}:
             self._send_json(404, {"error": "Not found"})
             return
 
