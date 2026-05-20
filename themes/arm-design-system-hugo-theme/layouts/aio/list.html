@@ -212,6 +212,12 @@ pre {
 <script>
 const AIO_BACKEND = {{ .Site.Params.aio_backend_url | default "http://localhost:5001" | jsonify }};
 
+function buildQueryUrl(base) {
+  const normalized = String(base || "").trim().replace(/\/+$/, "");
+  if (!normalized) return "http://localhost:5001/query";
+  return normalized.endsWith("/query") ? normalized : `${normalized}/query`;
+}
+
 function prefill(text) {
   document.getElementById("searchInput").value = text;
 }
@@ -232,9 +238,10 @@ async function runQuery() {
   document.getElementById("layout").style.display = "flex";
   document.getElementById("examples").style.display = "none";
   showLoader();
+  const queryUrl = buildQueryUrl(AIO_BACKEND);
 
   try {
-    const resp = await fetch(`${AIO_BACKEND}/query`, {
+    const resp = await fetch(queryUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query }),
