@@ -357,22 +357,62 @@ function renderMLGraphics() {
 
 function renderDocker() {
   document.getElementById("mainContent").innerHTML = `
-    <p>Installs Docker Engine and verifies with a test container.</p>
+    <h2>Install Docker Engine on Linux</h2>
 
+    <p>
+      These steps work on any Linux machine and any architecture — from an Arm cloud server to a Raspberry Pi. They also work inside WSL 2 on Windows.
+    </p>
+
+    <h3>Step 1: Run the installer</h3>
+    <p>Download and run the official Docker install script. This works on Ubuntu, Debian, RHEL, Fedora, and CentOS.</p>
 <pre>
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-
-sudo docker run hello-world
+curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
 </pre>
+
+    <h3>Step 2: Add your user to the Docker group</h3>
+    <p>This lets you run Docker commands without <code>sudo</code>. The <code>newgrp</code> command applies the change immediately without needing to log out.</p>
+<pre>
+sudo usermod -aG docker $USER ; newgrp docker
+</pre>
+
+    <h3>Step 3: Verify the installation</h3>
+    <p>Run a test container to confirm Docker is working correctly.</p>
+<pre>
+docker run hello-world
+</pre>
+    <p>You should see a message starting with <em>"Hello from Docker!"</em> confirming the install succeeded.</p>
+
+    <h3>Step 4: Check your architecture (optional)</h3>
+    <p>To confirm you're running on Arm, check the machine architecture:</p>
+<pre>
+uname -m
+</pre>
+    <p>Expected output: <code>aarch64</code> (Arm 64-bit), <code>armv7l</code> (Arm 32-bit), or <code>x86_64</code> (x86).</p>
+
+    <hr/>
+
+    <h3>Not on Ubuntu/Debian/RHEL/Fedora?</h3>
+    <p>If you're on a distribution that doesn't support <code>get.docker.com</code> (such as Manjaro), use your system package manager instead:</p>
+<pre>
+sudo pacman -Syu
+sudo pacman -S docker
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER ; newgrp docker
+</pre>
+
+    <button class="aio-reset" onclick="resetUI()">&#8592; Ask another question</button>
   `;
 
   document.getElementById("sources").innerHTML = `
     <div class="aio-source">
       <a href="https://learn.arm.com/install-guides/docker/docker-engine/" target="_blank">
         Docker Engine Install Guide
+      </a>
+    </div>
+    <div class="aio-source">
+      <a href="https://learn.arm.com/tag/docker/" target="_blank">
+        Docker Learning Paths on Arm
       </a>
     </div>
   `;
