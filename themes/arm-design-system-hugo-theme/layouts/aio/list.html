@@ -26,6 +26,9 @@
         <button class="aio-chip" onclick="runQuery('sme')">
           What are the learning paths showing SME?
         </button>
+        <button class="aio-chip" onclick="runQuery('mlgraphics')">
+          Help me get started with deploying ML models for graphics
+        </button>
       </div>
 
       <!-- Layout -->
@@ -216,10 +219,16 @@ function runQuery(type) {
     setTimeout(renderRedisOptions, 2000);
   }
   if (type === "sme") {
-  document.getElementById("searchInput").value = "What are the learning paths showing SME?";
-  showLoader();
-  setTimeout(renderSME, 2000);
-}
+    document.getElementById("searchInput").value = "What are the learning paths showing SME?";
+    showLoader();
+    setTimeout(renderSME, 2000);
+  }
+
+  if (type === "mlgraphics") {
+    document.getElementById("searchInput").value = "Help me get started with deploying ML models for graphics";
+    showLoader();
+    setTimeout(renderMLGraphics, 2000);
+  }
 }
 
 
@@ -254,6 +263,93 @@ function renderSME() {
     <div class="aio-source">
       <a href="https://learn.arm.com/learning-paths/cross-platform/sme-executorch-profiling/" target="_blank">
         SME Profiling with ExecuTorch
+      </a>
+    </div>
+  `;
+}
+
+function renderMLGraphics() {
+  document.getElementById("mainContent").innerHTML = `
+    <h2>Deploying ML Models for Graphics on Arm (Mali GPUs)</h2>
+
+    <h3>What you'll need first</h3>
+    <p>Before you begin, make sure you have:</p>
+    <ul>
+      <li><strong>Hardware</strong>: An Arm-based device with a Mali GPU (Android device or development board)</li>
+      <li><strong>Graphics API familiarity</strong>: Basic understanding of <strong>Vulkan</strong> (or willingness to learn it)</li>
+      <li><strong>ML basics</strong>: Familiarity with neural networks and model inference (e.g., ONNX, TensorFlow Lite)</li>
+      <li><strong>Development environment</strong>:
+        <ul>
+          <li>Android Studio or relevant toolchain</li>
+          <li>Vulkan SDK / drivers enabled</li>
+        </ul>
+      </li>
+      <li><strong>Optional (depending on path)</strong>:
+        <ul>
+          <li>Unity or Unreal Engine installed</li>
+          <li>Profiling tools (Arm Performance Studio)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <hr/>
+
+    <h3>How to get started</h3>
+    <p>Think of this as a short journey depending on where you're building:</p>
+
+    <hr/>
+
+    <h4>🎮 If you're working in a game engine (Unity or Unreal)</h4>
+    <p>Start by learning how ML integrates directly into rendering workflows.</p>
+    <ol>
+      <li>Begin with <strong>Neural Super Sampling in Unreal Engine</strong><br/>→ Learn how ML upscaling fits into a real-time rendering pipeline.</li>
+      <li>Then explore <strong>ML Extensions for Vulkan</strong><br/>→ Understand how these models actually execute on the GPU using Vulkan dataflow graphs.</li>
+      <li>Move to <strong>profiling and optimization</strong><br/>→ Measure performance and tune your pipeline for real-time constraints.</li>
+      <li>Finally, expand into <strong>Unity ML Agents on Arm</strong><br/>→ If you're building interactive or intelligent systems, integrate ML-driven behaviors.</li>
+    </ol>
+
+    <hr/>
+
+    <h4>📱 If you're building mobile or custom GPU pipelines</h4>
+    <p>Focus first on direct GPU execution and performance.</p>
+    <ol>
+      <li>Start with <strong>ML Extensions for Vulkan</strong><br/>→ Run neural networks directly on the GPU and understand the execution model.</li>
+      <li>Apply this to <strong>real-time effects</strong><br/>→ Use ML for denoising, background blur, or low-light enhancement.</li>
+      <li>Profile your application<br/>→ Use Arm tools to analyze execution time and optimize performance.</li>
+    </ol>
+
+    <hr/>
+
+    <h3>What this path gives you</h3>
+    <p>By following these steps, you'll move from:</p>
+    <ul>
+      <li>Running ML models on the GPU</li>
+      <li>→ to integrating them into real-time graphics workflows</li>
+      <li>→ to optimizing them for production use on Arm devices</li>
+    </ul>
+
+    <button class="aio-reset" onclick="resetUI()">&#8592; Ask another question</button>
+  `;
+
+  document.getElementById("sources").innerHTML = `
+    <div class="aio-source">
+      <a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/nss-unreal/" target="_blank">
+        Neural Super Sampling in Unreal Engine
+      </a>
+    </div>
+    <div class="aio-source">
+      <a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/vulkan-ml-sample/" target="_blank">
+        ML Extensions for Vulkan
+      </a>
+    </div>
+    <div class="aio-source">
+      <a href="https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/get-started-with-unity-on-android/" target="_blank">
+        Get Started with Unity on Android
+      </a>
+    </div>
+    <div class="aio-source">
+      <a href="https://learn.arm.com/install-guides/ams/" target="_blank">
+        Arm Performance Studio
       </a>
     </div>
   `;
