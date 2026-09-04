@@ -64,6 +64,81 @@
     });
   };
 
+  const configureLearnLinks = (chatAi) => {
+    if (!chatAi.shadowRoot) {
+      return;
+    }
+
+    const updateLink = (link) => {
+      try {
+        const destination = new URL(link.href, window.location.href);
+
+        if (destination.hostname !== "learn.arm.com") {
+          return;
+        }
+
+        link.dataset.learnNavigation = "true";
+
+        if (window.location.hostname !== "learn.arm.com") {
+          link.href = `${window.location.origin}${destination.pathname}${destination.search}${destination.hash}`;
+        }
+
+        link.removeAttribute("target");
+      } catch (error) {
+        console.warn("Unable to update chatbot link:", error);
+      }
+    };
+
+    const updateLinks = (root) => {
+      if (root.matches?.("a[href]")) {
+        updateLink(root);
+      }
+
+      root.querySelectorAll?.("a[href]").forEach(updateLink);
+    };
+
+    const linkObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes") {
+          updateLinks(mutation.target);
+          return;
+        }
+
+        mutation.addedNodes.forEach(updateLinks);
+      });
+    });
+
+    chatAi.shadowRoot.addEventListener(
+      "click",
+      (event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+
+        const link = event
+          .composedPath()
+          .find((element) => element.matches?.('a[data-learn-navigation="true"]'));
+
+        if (!link) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        window.location.assign(link.href);
+      },
+      true
+    );
+
+    updateLinks(chatAi.shadowRoot);
+    linkObserver.observe(chatAi.shadowRoot, {
+      attributes: true,
+      attributeFilter: ["href"],
+      childList: true,
+      subtree: true,
+    });
+  };
+
   try {
     await initAuth();
 
@@ -100,6 +175,7 @@
       document.body.appendChild(chatAi);
       window.chatAiRef = chatAi;
       restoreChatOpenState(chatAi);
+      configureLearnLinks(chatAi);
     }
   } catch (error) {
     console.warn("Unable to authenticate:", error);
