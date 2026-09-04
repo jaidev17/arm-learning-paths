@@ -1,4 +1,69 @@
 (async () => {
+  const chatOpenStateKey = "learn.chatAi.isOpen";
+
+  const readChatOpenState = () => {
+    try {
+      return window.sessionStorage.getItem(chatOpenStateKey) === "true";
+    } catch (error) {
+      console.warn("Unable to read chatbot display state:", error);
+      return false;
+    }
+  };
+
+  const writeChatOpenState = (isOpen) => {
+    try {
+      window.sessionStorage.setItem(chatOpenStateKey, String(isOpen));
+    } catch (error) {
+      console.warn("Unable to save chatbot display state:", error);
+    }
+  };
+
+  const persistChatOpenState = (chatAi) => {
+    const toggle = chatAi.shadowRoot?.querySelector(".ipxc-toggle");
+
+    if (!toggle) {
+      return false;
+    }
+
+    const isOpen = () => /\sclose$/i.test(toggle.getAttribute("aria-label") || "");
+    const saveState = () => writeChatOpenState(isOpen());
+
+    const toggleObserver = new MutationObserver(saveState);
+    toggleObserver.observe(toggle, {
+      attributes: true,
+      attributeFilter: ["aria-label"],
+    });
+
+    window.addEventListener("pagehide", saveState);
+
+    if (readChatOpenState() && !isOpen()) {
+      toggle.click();
+    }
+
+    return true;
+  };
+
+  const restoreChatOpenState = (chatAi) => {
+    if (persistChatOpenState(chatAi)) {
+      return;
+    }
+
+    if (!chatAi.shadowRoot) {
+      return;
+    }
+
+    const mountObserver = new MutationObserver(() => {
+      if (persistChatOpenState(chatAi)) {
+        mountObserver.disconnect();
+      }
+    });
+
+    mountObserver.observe(chatAi.shadowRoot, {
+      childList: true,
+      subtree: true,
+    });
+  };
+
   try {
     await initAuth();
 
@@ -34,6 +99,7 @@
       
       document.body.appendChild(chatAi);
       window.chatAiRef = chatAi;
+      restoreChatOpenState(chatAi);
     }
   } catch (error) {
     console.warn("Unable to authenticate:", error);
