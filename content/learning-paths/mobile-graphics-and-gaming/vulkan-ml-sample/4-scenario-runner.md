@@ -22,6 +22,7 @@ The SDK provides tools and runtime components that help you integrate neural net
 | **VGF Library**      | Lightweight runtime decoder for `.vgf` files containing graphs, constants, and shaders.              | Load and use graphs in a game engine | https://github.com/arm/ai-ml-sdk-vgf-library |
 | **Scenario Runner** | Executes ML workloads declaratively using JSON-based scenario descriptions.                         | Prototype and validate workloads | https://github.com/arm/ai-ml-sdk-scenario-runner |
 | **Emulation Layer** | Vulkan layer that emulates data graph and tensor extensions using compute shaders.                      | Test on devices without native support for ML Extensions for Vulkan | https://github.com/arm/ai-ml-emulation-layer-for-vulkan |
+| **ML Workload Library for Vulkan** | C++ library for creating and executing ML workloads using Vulkan. | Integrate ML workloads into Vulkan applications | https://github.com/arm/ai-ml-workload-library-for-vulkan |
 
 
 ## About the Hugging Face release

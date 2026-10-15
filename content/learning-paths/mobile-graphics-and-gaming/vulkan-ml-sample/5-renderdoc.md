@@ -8,11 +8,11 @@ layout: learningpathall
 
 ## Debug and profile workloads with RenderDoc
 
-Integrating machine learning into real-time rendering makes frame-level inspection and performance analysis critical. RenderDoc helps you visualize and debug the workloads by letting you step through frames, examine tensors, and inspect Vulkan API calls.
+Integrating machine learning into real-time rendering makes frame-level inspection and performance analysis critical. RenderDoc is a GPU frame capture tool that helps developers debug and analyze Vulkan workloads.
 
-RenderDoc is a powerful GPU frame capture tool that lets you:
+With RenderDoc, you can:
 
-- Step through a frame’s rendering process
+- Step through a frame's rendering process
 - Inspect Vulkan API calls
 - View shader inputs and outputs
 - Examine GPU resource states and memory usage
