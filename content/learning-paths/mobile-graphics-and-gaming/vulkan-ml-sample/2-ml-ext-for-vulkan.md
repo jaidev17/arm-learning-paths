@@ -49,7 +49,7 @@ python -m pip show ai-ml-emulation-layer-for-vulkan
 Each command prints the installed version of the tool or shows where the appropriate files are located.
 
 
-### Install the Vulkan Software Development Kit
+## Install the Vulkan Software Development Kit
 
 Arm's ML SDK for Vulkan and the LunarG Vulkan SDK serve different purposes.
 
