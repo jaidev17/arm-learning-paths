@@ -24,7 +24,6 @@ The SDK provides tools and runtime components that help you integrate neural net
 | **Emulation Layer** | Vulkan layer that emulates data graph and tensor extensions using compute shaders.                      | Test on devices without native support for ML Extensions for Vulkan | https://github.com/arm/ai-ml-emulation-layer-for-vulkan |
 | **ML Workload Library for Vulkan** | C++ library for creating and executing ML workloads using Vulkan. | Integrate ML workloads into Vulkan applications | https://github.com/arm/ai-ml-workload-library-for-vulkan |
 
-
 ## About the Hugging Face release
 
 The [NSS model page on Hugging Face](https://huggingface.co/Arm/neural-super-sampling) provides a minimal example, called a *scenario*, for running NSS on a sample frame. It includes a Windows-compatible Scenario Runner binary, the VGF model, and one frame of input and expected output data. You can use these assets to run an end-to-end workflow and explore the VGF model in more detail.

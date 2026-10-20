@@ -10,10 +10,11 @@ layout: learningpathall
 
 To run the Vulkan Samples, you first need to set up your development environment.
 
-This setup involves two main steps:
+This setup involves three main steps:
 
 - Create a Python virtual environment and install the ML Emulation Layers for Vulkan.
-- Install the Vulkan SDK and configure the emulation layers for Vulkan, which simulate the `VK_ARM_data_graph` and `VK_ARM_tensors` extensions.
+- Install the LunarG Vulkan SDK.
+- Enable the ML Emulation Layers using Vulkan Configurator.
 
 ## Set up the development environment
 
@@ -24,13 +25,13 @@ python --version
 cd $HOME
 ```
 
-The following steps create a Python virtual environment and install two packages:
+Create a Python virtual environment and install the following packages:
 
-- **ML Emulation Layers for Vulkan:** Part of Arm's open-source **ML SDK for Vulkan**, a toolkit that helps developers build and test neural graphics and AI/ML workloads using the ML Extensions for Vulkan. The emulation layers provide support for these extensions on Vulkan-capable hardware.
-- **CMake:** Provides the build tools needed to compile the Vulkan Samples.
+- **ML Emulation Layers for Vulkan:** Provides the emulation layers introduced in the previous section.
+- **CMake:** A build tool used to configure and build the Vulkan Samples.
 
 ```powershell
-py -m venv .venv
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install ai-ml-emulation-layer-for-vulkan cmake
@@ -47,7 +48,14 @@ python -m pip show ai-ml-emulation-layer-for-vulkan
 
 Each command prints the installed version of the tool or shows where the appropriate files are located.
 
+
 ### Install the Vulkan Software Development Kit
+
+Arm's ML SDK for Vulkan and the LunarG Vulkan SDK serve different purposes.
+
+Arm's ML SDK for Vulkan provides the ML Emulation Layers installed earlier in this Learning Path. The LunarG Vulkan SDK provides Vulkan development tools, including Vulkan Configurator, which you'll use to enable those layers.
+
+The two SDKs work together to provide a development environment where you can build and run Vulkan applications using the emulated ML extensions.
 
 Download and install the Vulkan SDK from [Getting Started with the Windows Vulkan SDK](https://vulkan.lunarg.com/sdk/home).
 
@@ -60,8 +68,9 @@ Download and install the Vulkan SDK from [Getting Started with the Windows Vulka
 
 Verify that Vulkan Configurator opens successfully. You will use it in the next section to enable the ML Emulation Layers for Vulkan.
 
-
 ## Enable the emulation layers in Vulkan Configurator
+
+Installing the ML Emulation Layers makes them available on your system, but they must also be enabled so that Vulkan applications can discover and use the emulated ML extensions.
 
 If Vulkan Configurator is not already open, launch it from the Windows Start menu.
 
